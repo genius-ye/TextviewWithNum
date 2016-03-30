@@ -28,7 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="带数目的textview"/>
-  ```
+    ```
+
 ### 部分api：
 
 ```java
