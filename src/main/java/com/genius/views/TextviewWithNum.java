@@ -1,18 +1,25 @@
 package com.genius.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.TextView;
+
+import com.vshidai.textviewwithnum.R;
 
 /**
+ *
+ * 带数字提示的textview
+ *
  * Created by genius-ye on 2016/3/30.
+ *
+ * modify at 2017-12-19 16:21:35
  */
-public class TextviewWithNum extends TextView {
+public class TextviewWithNum extends android.support.v7.widget.AppCompatTextView {
     private String TAG = "TextviewWithNum";
     /**
      * 文字区域
@@ -47,6 +54,10 @@ public class TextviewWithNum extends TextView {
      * 是否显示数目
      **/
     private boolean isShow = true;
+    /**
+     * 圆内文字的大小(默认是文字的大小)
+     */
+    private float circletextsize = 24;
 
     public TextviewWithNum(Context context) {
         super(context);
@@ -57,7 +68,10 @@ public class TextviewWithNum extends TextView {
     public TextviewWithNum(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
-
+        TypedArray typedArray = context.obtainStyledAttributes(attrs , R.styleable.TextviewWithNum);
+        radius = typedArray.getInt(R.styleable.TextviewWithNum_circle_radius,20);
+        circletextsize = typedArray.getFloat(R.styleable.TextviewWithNum_circle_textsize,getTextSize());
+        discount = typedArray.getInt(R.styleable.TextviewWithNum_discount,10);
     }
 
     public TextviewWithNum(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -67,11 +81,11 @@ public class TextviewWithNum extends TextView {
 
     private void init() {
         paint = new Paint();
-        paint.setTextSize(24);
+        paint.setAntiAlias(true);// 抗锯齿
         if (num.length() > 2) {
             num = "···";
         }
-        rectNum = getTextArea(num);
+
         content = getText().toString();
         Log.d(TAG, "content=" + content);
         postInvalidate();
@@ -82,6 +96,7 @@ public class TextviewWithNum extends TextView {
 //        super.onDraw(canvas);
         paint.setColor(getCurrentTextColor());
         Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+        paint.setTextSize(getTextSize());
         //文字垂直居中
         int baseline = (getHeight() - fontMetrics.bottom - fontMetrics.top) / 2;
         canvas.drawText(content, 0, baseline, paint);
@@ -90,8 +105,9 @@ public class TextviewWithNum extends TextView {
             //绘制圆形
             canvas.drawCircle(getWidth() - radius, radius, radius, paint);
             paint.setColor(Color.WHITE);
-
-            canvas.drawText(num, getWidth() - radius - rectNum.width() / 2, rectNum.height(), paint);
+            paint.setTextSize(circletextsize);
+            int y = (radius*2-rectNum.height())/2+rectNum.height();
+            canvas.drawText(num, getWidth() - radius*2 + (radius*2-rectNum.width())/2, y, paint);
         }
     }
 
@@ -99,7 +115,10 @@ public class TextviewWithNum extends TextView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         content = getText().toString();
+        paint.setTextSize(getTextSize());
         rectContent = getTextArea(content);
+        paint.setTextSize(circletextsize);
+        rectNum = getTextArea(num);
         if (isShow) {
             setMeasuredDimension(rectContent.width() + radius * 2 + discount, rectContent.height() + rectNum.height());
         } else {
@@ -193,5 +212,13 @@ public class TextviewWithNum extends TextView {
      */
     public void setShow(boolean show) {
         isShow = show;
+    }
+
+    /**
+     * 设置圆内文字大小
+     * @param circletextsize
+     */
+    public void setCircletextsize(float circletextsize) {
+        this.circletextsize = circletextsize;
     }
 }
