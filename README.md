@@ -20,14 +20,25 @@
 > 还可以自定义消息汽包和文本之间的距离
 ![效果4](https://github.com/genius-ye/TextviewWithNum/blob/master/3.png?raw=true)
 
+****
+
+> 修复锯齿问题
+![效果](https://github.com/genius-ye/TextviewWithNum/blob/master/4.png?raw=true)
+
 ### 使用方法：
 
-> 先将库导入到项目中去，然后就和正常的textview一样使用
+> 先将库导入到项目中去，然后就和正常的textview一样使用 **（圆内数字大小可以单独设置，若不设置则使用textview的文字大小）**
+
 > ```xml
->       <com.genius.views.TextviewWithNum
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="带数目的textview"/>
+<com.genius.views.TextviewWithNum
+ android:layout_height="wrap_content"
+ android:layout_width="wrap_content"
+ android:textSize="18sp"
+ android:gravity="center"
+ app:circle_radius="20"
+ app:circle_textsize="20"
+ app:discount="30"
+ android:text="带数字的textview"/>
     ```
 
 ### 部分api：
@@ -107,5 +118,13 @@
      */
     public void setShow(boolean show) {
         isShow = show;
+    }
+
+    /**
+     * 设置圆内文字大小
+     * @param circletextsize
+     */
+    public void setCircletextsize(float circletextsize) {
+        this.circletextsize = circletextsize;
     }
 ```
