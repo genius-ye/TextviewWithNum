@@ -29,7 +29,7 @@
 
 > 先将库导入到项目中去，然后就和正常的textview一样使用 **（圆内数字大小可以单独设置，若不设置则使用textview的文字大小）**
 
-> ```xml
+```xml
 <com.genius.views.TextviewWithNum
  android:layout_height="wrap_content"
  android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
  app:circle_textsize="20"
  app:discount="30"
  android:text="带数字的textview"/>
-    ```
+```
 
 ### 部分api：
 
