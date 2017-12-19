@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TextviewWithNum">
+        <attr name="circle_radius" format="integer">20</attr>
+        <attr name="circle_textsize" format="float">24</attr>
+        <attr name="discount" format="integer">10</attr>
+    </declare-styleable>
+
+</resources>
